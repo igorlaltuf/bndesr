@@ -1,4 +1,5 @@
 #' Queries the loans made through The Brazilian Development Bank (BNDES) since 2002.
+options(scipen = 999)
 
 # Function query_bndes
 
@@ -96,9 +97,21 @@ query_bndes <- function() {
        table <- rbind(table, table_temp)
        i <- i + 1
     }
+
+    # clean data
     table <- table %>%
+      # situacao_operacional
       dplyr::mutate(situacao_operacional = replace(situacao_operacional, situacao_operacional == "LIQUIDADA\n", "LIQUIDADO"),
-             situacao_operacional = replace(situacao_operacional, situacao_operacional == "ATIVA\n", "ATIVO"))
+             situacao_operacional = replace(situacao_operacional, situacao_operacional == "ATIVA\n", "ATIVO")) %>%
+      # valor_contratacao_reais
+      dplyr::mutate(valor_contratacao_reais = gsub("[^0-9-]", "", valor_contratacao_reais)) %>%
+      dplyr::mutate(valor_contratacao_reais = gsub("[^0-9-]", "", valor_contratacao_reais)) %>%
+      dplyr::mutate(valor_contratacao_reais = as.numeric(valor_contratacao_reais)) %>%
+      # valor_desembolso_reais
+      dplyr::mutate(valor_desembolso_reais = gsub("[^0-9-]", "", valor_desembolso_reais)) %>%
+      dplyr::mutate(valor_desembolso_reais = gsub("[^0-9-]", "", valor_desembolso_reais)) %>%
+      dplyr::mutate(valor_desembolso_reais = as.numeric(valor_desembolso_reais)) %>%
+      dplyr::mutate(valor_desembolso_reais = ifelse(is.na(valor_desembolso_reais), 0, valor_desembolso_reais))
 
     return(table)
   }

@@ -6,14 +6,15 @@ options(scipen = 999)
 query_bndes <- function() {
   dir.temp <- tempdir()
   year.options <- c("/naoautomaticas/naoautomaticas",
-                    "/automaticas/operacoes_indiretas_automaticas_2002-01-01_ate_2008-12-31",
-                    "/automaticas/operacoes_indiretas_automaticas_2009-01-01_ate_2010-12-31",
-                    "/automaticas/operacoes_indiretas_automaticas_2011-01-01_ate_2011-12-31",
-                    "/automaticas/operacoes_indiretas_automaticas_2012-01-01_ate_2012-12-31",
-                    "/automaticas/operacoes_indiretas_automaticas_2013-01-01_ate_2013-12-31",
-                    "/automaticas/operacoes_indiretas_automaticas_2014-01-01_ate_2014-12-31",
+                    "/automaticas/operacoes_indiretas_automaticas_2017-01-01_ate_2022-04-30",
                     "/automaticas/operacoes_indiretas_automaticas_2015-01-01_ate_2016-12-31",
-                    "/automaticas/operacoes_indiretas_automaticas_2017-01-01_ate_2022-04-30")
+                    "/automaticas/operacoes_indiretas_automaticas_2014-01-01_ate_2014-12-31",
+                    "/automaticas/operacoes_indiretas_automaticas_2013-01-01_ate_2013-12-31",
+                    "/automaticas/operacoes_indiretas_automaticas_2012-01-01_ate_2012-12-31",
+                    "/automaticas/operacoes_indiretas_automaticas_2011-01-01_ate_2011-12-31",
+                    "/automaticas/operacoes_indiretas_automaticas_2009-01-01_ate_2010-12-31",
+                    "/automaticas/operacoes_indiretas_automaticas_2002-01-01_ate_2008-12-31"
+                    )
 
 
   links <- paste0("https://www.bndes.gov.br/arquivos/central-downloads/operacoes_financiamento", year.options, ".xlsx")
@@ -27,11 +28,20 @@ query_bndes <- function() {
     i <- 1
     for (idx in seq_along(links)) {
 
+      # check local files before download
+      if(stringr::str_sub(links[i], start = -19) == lista.arquivos.locais[i]){
+
+        print('Os arquivos já foram baixados anteriormente.')
+
+      } else {
+
         download.file(links[i],
-                  paste(dir.temp, # fazer com que o nome do arquivo seja dinâmico
-                        stringr::str_sub(links[i], start = -19),
-                        sep = "/"),
-                  mode = "wb") # download the file in binary mode
+                      paste(dir.temp, # fazer com que o nome do arquivo seja dinâmico
+                            stringr::str_sub(links[i], start = -19),
+                            sep = "/"),
+                      mode = "wb") # download the file in binary mode
+      }
+
         i <- i + 1
     }
   }

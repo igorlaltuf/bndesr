@@ -50,7 +50,7 @@ query_bndes <- function() {
                          "data_contrat", "valor_contratacao_reais",
                          "valor_desembolso_reais", "fonte_desembolso",
                          "custo_financeiro", "juros",
-                         "prazo_carencia_meses","prazo_amortização_meses",
+                         "prazo_carencia_meses","prazo_amortizacao_meses",
                          "modalidade", "forma_apoio", "produto",
                          "instrumento_financeiro", "inovacao",
                          "area_operacional", "setor_cnae",
@@ -69,33 +69,80 @@ query_bndes <- function() {
 
     for(i in seq_along(links)) {
 
-      ifelse(lista.arquivos.locais[i] == "naoautomaticas.xlsx",
-             skip_lines <- 4,
-             skip_lines <- 5)
+      if (lista.arquivos.locais[i] == "naoautomaticas.xlsx") {
+        # nao-automaticas
 
-       table_temp <- readxl::read_excel(paste0(dir.temp, '/', lista.arquivos.locais[i]),
-                                        sheet = 1,
-                                        skip = skip_lines) %>%
-         janitor::clean_names()
+        table_temp <- readxl::read_excel(paste0(dir.temp, '/', lista.arquivos.locais[i]),
+                                         sheet = 1,
+                                         skip = 4,
+                                         col_types = c(rep('text',34))) %>%
+          janitor::clean_names()
 
-       if(lista.arquivos.locais[i] != "naoautomaticas.xlsx"){
+        colnames(table_temp) <- colnames(table)
 
-         names_auto <- table_col_names[c(1, 2, 4:6, 8:31, 34)]
-         colnames(table_temp) <- names_auto
-         table_temp$descricao_projeto <- NA
-         table_temp$num_contrato <- NA
-         table_temp$tipo_garantia <- NA
-         table_temp$tipo_excepcionalidade <- NA
 
-         table_temp <- table_temp %>%
-           dplyr::select(1,2,31,3:7,32,8:34)
+        # Transform
 
-       } else {
-         colnames(table_temp) <- colnames(table)
-       }
+        table_temp <- table_temp %>%
+          # format dates
+          dplyr::mutate(data_contrat = as.Date(as.numeric(data_contrat),
+                                               origin = "1899-12-30",
+                                               format = "%Y-%m-%d")) %>%
+          dplyr::mutate(data_contrat = format(lubridate::ymd(data_contrat), "%d/%m/%Y")) %>%
+          # add year column
+          dplyr::mutate(ano = as.character(lubridate::year(as.Date(data_contrat, format = "%d/%m/%Y")))) %>%
+          # contratação
+          dplyr::mutate(valor_contratacao_reais = gsub(",", ".", valor_contratacao_reais)) %>%
+          dplyr::mutate(valor_contratacao_reais = round(as.numeric(valor_contratacao_reais), 2)) %>%
+          # desembolso
+          dplyr::mutate(valor_desembolso_reais = gsub(",", ".", valor_desembolso_reais)) %>%
+          dplyr::mutate(valor_desembolso_reais = round(as.numeric(valor_desembolso_reais), 2)) %>%
+          dplyr::mutate(valor_desembolso_reais = ifelse(is.na(valor_desembolso_reais), 0, valor_desembolso_reais)) %>%
+          # juros
+          dplyr::mutate(juros = gsub(",", ".", juros)) %>%
+          dplyr::mutate(juros = round(as.numeric(juros), 2))
 
-       table <- rbind(table, table_temp)
-       i <- i + 1
+      } else {
+
+        # automaticas
+        table_temp <- readxl::read_excel(paste0(dir.temp, '/', lista.arquivos.locais[i]),
+                                         sheet = 1,
+                                         skip = 5,
+                                         col_types = c(rep('text',30))) %>%
+          janitor::clean_names()
+
+        names_auto <- table_col_names[c(1, 2, 4:6, 8:31, 34)]
+        colnames(table_temp) <- names_auto
+        table_temp$descricao_projeto <- NA
+        table_temp$num_contrato <- NA
+        table_temp$tipo_garantia <- NA
+        table_temp$tipo_excepcionalidade <- NA
+
+        table_temp <- table_temp %>%
+          dplyr::select(1,2,31,3:7,32,8:34)
+
+        # Transform
+
+        table_temp <- table_temp %>%
+          # add year column
+          dplyr::mutate(ano = lubridate::year(as.Date(data_contrat, format = "%d/%m/%Y"))) %>%
+          # valor contratado
+          dplyr::mutate(valor_contratacao_reais = gsub("[^0-9-]", "", valor_contratacao_reais)) %>%
+          dplyr::mutate(valor_contratacao_reais = gsub("[^0-9-]", "", valor_contratacao_reais)) %>%
+          dplyr::mutate(valor_contratacao_reais = as.numeric(valor_contratacao_reais)) %>%
+          # valor desembolsado
+          dplyr::mutate(valor_desembolso_reais = gsub("[^0-9-]", "", valor_desembolso_reais)) %>%
+          dplyr::mutate(valor_desembolso_reais = gsub("[^0-9-]", "", valor_desembolso_reais)) %>%
+          dplyr::mutate(valor_desembolso_reais = as.numeric(valor_desembolso_reais)) %>%
+          dplyr::mutate(valor_desembolso_reais = ifelse(is.na(valor_desembolso_reais), 0, valor_desembolso_reais)) %>%
+          # juros
+          dplyr::mutate(juros = gsub(",", ".", juros)) %>%
+          dplyr::mutate(juros = round(as.numeric(juros), 2))
+
+      }
+
+      table <- rbind(table, table_temp)
+      i <- i + 1
     }
 
     # clean data
@@ -103,17 +150,16 @@ query_bndes <- function() {
       # situacao_operacional
       dplyr::mutate(situacao_operacional = replace(situacao_operacional, situacao_operacional == "LIQUIDADA\n", "LIQUIDADO"),
              situacao_operacional = replace(situacao_operacional, situacao_operacional == "ATIVA\n", "ATIVO")) %>%
-      # valor_contratacao_reais
-      dplyr::mutate(valor_contratacao_reais = gsub("[^0-9-]", "", valor_contratacao_reais)) %>%
-      dplyr::mutate(valor_contratacao_reais = gsub("[^0-9-]", "", valor_contratacao_reais)) %>%
-      dplyr::mutate(valor_contratacao_reais = as.numeric(valor_contratacao_reais)) %>%
-      # valor_desembolso_reais
-      dplyr::mutate(valor_desembolso_reais = gsub("[^0-9-]", "", valor_desembolso_reais)) %>%
-      dplyr::mutate(valor_desembolso_reais = gsub("[^0-9-]", "", valor_desembolso_reais)) %>%
-      dplyr::mutate(valor_desembolso_reais = as.numeric(valor_desembolso_reais)) %>%
-      dplyr::mutate(valor_desembolso_reais = ifelse(is.na(valor_desembolso_reais), 0, valor_desembolso_reais))
+      # carencia
+      dplyr::mutate(prazo_carencia_meses = as.numeric(prazo_carencia_meses)) %>%
+      dplyr::mutate(prazo_amortizacao_meses = as.numeric(prazo_amortizacao_meses)) %>%
+
+      # juros
+      dplyr::mutate(juros = gsub(",", ".", juros)) %>%
+      dplyr::mutate(juros = round(as.numeric(juros), 2))
 
     return(table)
+
   }
 
   table <- import_data()

@@ -5,27 +5,33 @@ options(scipen = 999)
 
 query_bndes <- function() {
   dir.temp <- tempdir()
-  year.options <- c("/naoautomaticas/naoautomaticas",
-                    "/automaticas/operacoes_indiretas_automaticas_2017-01-01_ate_2022-04-30",
-                    "/automaticas/operacoes_indiretas_automaticas_2015-01-01_ate_2016-12-31",
-                    "/automaticas/operacoes_indiretas_automaticas_2014-01-01_ate_2014-12-31",
-                    "/automaticas/operacoes_indiretas_automaticas_2013-01-01_ate_2013-12-31",
-                    "/automaticas/operacoes_indiretas_automaticas_2012-01-01_ate_2012-12-31",
-                    "/automaticas/operacoes_indiretas_automaticas_2011-01-01_ate_2011-12-31",
-                    "/automaticas/operacoes_indiretas_automaticas_2009-01-01_ate_2010-12-31",
-                    "/automaticas/operacoes_indiretas_automaticas_2002-01-01_ate_2008-12-31"
-                    )
 
-
-  links <- paste0("https://www.bndes.gov.br/arquivos/central-downloads/operacoes_financiamento", year.options, ".xlsx")
-
-  # check local files
-  lista.arquivos.locais <- list.files(path = dir.temp, pattern = "*.xlsx", full.names = F)
-  lista.arquivos.locais <- rev(lista.arquivos.locais)
 
   # Download data from BNDES
   download_data <- function() {
+
+    year.options <- c("/naoautomaticas/naoautomaticas",
+                      "/automaticas/operacoes_indiretas_automaticas_2017-01-01_ate_2022-04-30",
+                      "/automaticas/operacoes_indiretas_automaticas_2015-01-01_ate_2016-12-31",
+                      "/automaticas/operacoes_indiretas_automaticas_2014-01-01_ate_2014-12-31",
+                      "/automaticas/operacoes_indiretas_automaticas_2013-01-01_ate_2013-12-31",
+                      "/automaticas/operacoes_indiretas_automaticas_2012-01-01_ate_2012-12-31",
+                      "/automaticas/operacoes_indiretas_automaticas_2011-01-01_ate_2011-12-31",
+                      "/automaticas/operacoes_indiretas_automaticas_2009-01-01_ate_2010-12-31",
+                      "/automaticas/operacoes_indiretas_automaticas_2002-01-01_ate_2008-12-31"
+                      )
+
+    links <- paste0("https://www.bndes.gov.br/arquivos/central-downloads/operacoes_financiamento", year.options, ".xlsx")
+
+    # check local files
+    lista.arquivos.locais <- list.files(path = dir.temp, pattern = "*.xlsx", full.names = F)
+    lista.arquivos.locais <- rev(lista.arquivos.locais)
+
+    if(length(lista.arquivos.locais) == 0) {
+     lista.arquivos.locais <- c(rep(0, 9)) # empty vector for the next for loop works
+       }
     i <- 1
+
     for (idx in seq_along(links)) {
 
       # check local files before download

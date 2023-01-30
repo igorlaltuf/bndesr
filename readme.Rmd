@@ -67,10 +67,11 @@ df <- query_desimbursements_data(year = c(1997:2015))
 Para citar em trabalhos, use:
 
 ```{r}
-#citation('bndesr')
+citation('bndesr')
 ```
 
 ## Dicionário de dados
 
 Em breve.
+
 

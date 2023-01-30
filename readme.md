@@ -81,7 +81,19 @@ df <- query_desimbursements_data(year = c(1997:2015))
 Para citar em trabalhos, use:
 
 ``` r
-#citation('bndesr')
+citation('bndesr')
+#> 
+#> To cite bndesr in publications use:
+#> 
+#> 
+#> A BibTeX entry for LaTeX users is
+#> 
+#>   @Misc{,
+#>     title = {BNDESR: the package to access data from the Brazilian Development Bank in R.},
+#>     author = {Igor Laltuf},
+#>     year = {2023},
+#>     url = {https://github.com/igorlaltuf/bndesr},
+#>   }
 ```
 
 ## Dicionário de dados

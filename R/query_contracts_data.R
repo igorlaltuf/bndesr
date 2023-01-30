@@ -108,19 +108,19 @@ options(scipen = 999, timeout = 240)
      }
 
       # check if files have already been downloaded
-      if(file.exists(paste0(dir.temp, "\\financiamentos","_", file_name, ".xlsx"))){
+      if(file.exists(paste0(dir.temp, "/financiamentos","_", file_name, ".xlsx"))){
           message("File already downloaded.")
 
       } else {
         try(
       download.file(url_list[i],
-                    destfile = paste0(dir.temp, "\\financiamentos","_", file_name, ".xlsx"),
+                    destfile = paste0(dir.temp, "/financiamentos","_", file_name, ".xlsx"),
                     mode = "wb") # download the file in binary mode (needed for these xlsx files)
         )
 
         # If the last year files has been updated, it will try to guess the new date
 
-        if(file.size(paste0(dir.temp, "\\financiamentos","_", file_name, ".xlsx")) < 100000){
+        if(file.size(paste0(dir.temp, "/financiamentos","_", file_name, ".xlsx")) < 100000){
 
           message('The source site changed the file name. Trying to access the download link.')
 
@@ -134,17 +134,17 @@ options(scipen = 999, timeout = 240)
 
               download.file(paste0("https://www.bndes.gov.br/arquivos/central-downloads/operacoes_financiamento/automaticas/operacoes_indiretas_automaticas_2017-01-01_ate_",
                                    as.Date(i, origin = "1970-01-01"), ".xlsx"),
-                            destfile = paste0(dir.temp, "\\financiamentos","_", file_name, ".xlsx"),
+                            destfile = paste0(dir.temp, "/financiamentos","_", file_name, ".xlsx"),
                             mode = "wb") # download the file in binary mode)
 
                 i <- i + 1
 
-                if (file.size(paste0(dir.temp, "\\financiamentos","_", file_name, ".xlsx")) > 100000){
+                if (file.size(paste0(dir.temp, "/financiamentos","_", file_name, ".xlsx")) > 100000){
                   break
                 }
               }
 
-              if(file.size(paste0(dir.temp, "\\financiamentos","_", file_name, ".xlsx")) < 100000) {
+              if(file.size(paste0(dir.temp, "/financiamentos","_", file_name, ".xlsx")) < 100000) {
                 message("Could not download file.")
               }
 

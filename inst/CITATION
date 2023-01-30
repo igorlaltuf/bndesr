@@ -1,0 +1,12 @@
+citHeader("To cite bndesr in publications use:")
+
+citEntry(
+  entry    = "Misc",
+  title    = "BNDESR: the package to access data from the Brazilian Development Bank in R.",
+  author   = as.person("Igor Laltuf"),
+  year     = 2023,
+  url      = "https://github.com/igorlaltuf/bndesr",
+  textVersion = paste(
+
+  )
+)

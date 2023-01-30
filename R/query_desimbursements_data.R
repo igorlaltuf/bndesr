@@ -152,13 +152,13 @@ query_desimbursements_data <- function(year = 'all') {
     }
 
     # check if files have already been downloaded
-    if(file.exists(paste0(dir.temp, "\\", file_name, ".xlsx"))){
+    if(file.exists(paste0(dir.temp, "/", file_name, ".xlsx"))){
       message("File already downloaded.")
 
     } else {
 
         download.file(url_list[i],
-                      destfile = paste0(dir.temp, "\\", file_name, ".xlsx"),
+                      destfile = paste0(dir.temp, "/", file_name, ".xlsx"),
                       mode = "wb") # download the file in binary mode)
 
 
@@ -235,7 +235,7 @@ query_desimbursements_data <- function(year = 'all') {
 
   files_import <- unique(files_import)
 
-  print(files_import)
+  # print(files_import)
 
   message("Please wait while the files are being imported into R. This may take a while.")
 

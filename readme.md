@@ -14,11 +14,8 @@ Coffee”](https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png)
 
 ## Sobre o pacote
 
-O pacote bndesr tem como objetivo facilitar a importação dos dados sobre
-os financiamentos do BNDES para o R.
-
-Atualmente o pacote contém duas funções: query_contracts e
-query_desimbursements.
+O pacote bndesr tem como objetivo facilitar a importação dos dados
+disponibilizados pelo BNDES para o R.
 
 A função query_contracts contém dados desde o ano de 2002 sobre os
 financiamentos feitos pelo banco ( tanto na modalidade direta quanto na
@@ -43,6 +40,10 @@ determinado contrato específico. A função query_desimbursements deve ser
 usada para analisar os desembolsos do banco em uma escala maior, como
 por exemplo, a evolução anual de desembolsos por setor ou subsetor da
 CNAE.
+
+As funções query_bndespar_portifolio e query_bndespar_desimbursements
+são para acessar a carteira de ativos do BNDESPar e os seus desembolsos,
+respectivamente.
 
 ## Instalação
 

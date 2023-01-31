@@ -9,12 +9,13 @@
 #' @return a dataframe with data for the selected year.
 #'
 #' @examples
-#' \dontrun{query_desimbursements_data(year = c(1999:2010)}
+#' \donttest{query_desimbursements(year = c(1999:2010))}
 #'
 #' @export
-query_desimbursements_data <- function(year = 'all') {
+query_desimbursements <- function(year = 'all') {
 
-  options(scipen = 999, timeout = 240)
+  old <- options(scipen = 999, timeout = 240)
+  on.exit(options(old))
 
   ano <-  NULL
 

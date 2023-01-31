@@ -10,12 +10,13 @@
 #' @return a dataframe with data for the selected year.
 #'
 #' @examples
-#' \dontrun{query_contracts_data(year = 2012)}
+#' \donttest{query_contracts(year = 2012)}
 #'
 #' @export
-query_contracts_data <- function(year = 'all') {
+query_contracts <- function(year = 'all') {
 
-options(scipen = 999, timeout = 240)
+  old <- options(scipen = 999, timeout = 240)
+  on.exit(options(old))
 
   data_contrat <- ano <- valor_contratacao_reais <- juros <- subsetor_cnae_agrup <- valor_desembolso_reais <- situacao_operacional <- prazo_carencia_meses <- prazo_amortizacao_meses <-  NULL
 

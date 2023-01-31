@@ -2,7 +2,7 @@
 
 if (Sys.getenv('USERNAME') == 'igorl') {
 
-  df <- query_contracts_data(year = c(2002:2021))
+  df <- query_contracts(year = c(2002:2021))
 
 
   test_that("Check values from previous years", {
@@ -14,7 +14,7 @@ if (Sys.getenv('USERNAME') == 'igorl') {
 
 }
 
-df_2022 <- query_contracts_data(year = 2022)
+df_2022 <- query_contracts(year = 2022)
 
 test_that("Check values from currenty year", {
   expect_equal(ncol(df_2022), 35)

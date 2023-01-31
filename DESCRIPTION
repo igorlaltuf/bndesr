@@ -1,10 +1,10 @@
 Package: bndesr
-Title: Allows Access to Data on Loan Amounts Carried Out by the Brazilian Development Bank (BNDES) Since 1995
+Title: Access Data from the Brazilian Development Bank (BNDES) since 1995
 Version: 1.0
 Authors@R: 
     person("Igor", "Laltuf", , "igorlaltuf@gmail.com", role = c("aut", "cre"),
            comment = c(ORCID = "https://orcid.org/0000-0002-5614-4404"))
-Description: Allows Access to Data on Loan Amounts Carried Out by the Brazilian Development Bank (BNDES) Since 1995.
+Description: Allows access to data on BNDES disbursements and contracts since 1995. The package makes it easy to import data from the bank into R.
 License: MIT + file LICENSE
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
@@ -13,6 +13,7 @@ Imports:
     dplyr,
     janitor,
     lubridate,
+    readr,
     readxl,
     stringr
 Suggests: 

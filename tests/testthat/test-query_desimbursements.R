@@ -3,7 +3,7 @@
 
 if (Sys.getenv('USERNAME') == 'igorl') {
 
-  df <- query_desimbursements_data(year = c(1995:2021))
+  df <- query_desimbursements(year = c(1995:2021))
 
   # Data below from file https://www.bndes.gov.br/wps/wcm/connect/site/c447152b-f540-4b54-a30e-e6d96d375637/DESEMBOLSOS+DO+SISTEMA+BNDES.xlsx?MOD=AJPERES&amp;CACHEID=ROOTWORKSPACE.Z18_7QGCHA41LORVA0AHO1SIO51085-c447152b-f540-4b54-a30e-e6d96d375637-ohz2OC6
 
@@ -34,7 +34,7 @@ if (Sys.getenv('USERNAME') == 'igorl') {
 
 }
 
-df_2022 <- query_desimbursements_data(year = 2022)
+df_2022 <- query_desimbursements(year = 2022)
 
 test_that("Check values from currenty year", {
   expect_equal(ncol(df_2022), 16)

@@ -1,5 +1,5 @@
 Package: bndesr
-Title: Access Data from the Brazilian Development Bank (BNDES) since 1995
+Title: Access Data from the Brazilian Development Bank (BNDES)
 Version: 1.0
 Authors@R: 
     person("Igor", "Laltuf", , "igorlaltuf@gmail.com", role = c("aut", "cre"),

@@ -1,4 +1,4 @@
-citHeader("To cite bndesr in publications use:")
+bibentry("To cite bndesr in publications use:")
 
 citEntry(
   entry    = "Misc",

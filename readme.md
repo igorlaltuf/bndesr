@@ -1,7 +1,7 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# bndesr: the package to access data from the Brazilian Development Bank in R
+# bndesr: o pacote para acessar os dados do BNDES no R
 
 <!-- badges: start -->
 
@@ -96,7 +96,7 @@ Para citar em trabalhos, use:
 ``` r
 citation('bndesr')
 #> 
-#> To cite bndesr in publications use:
+#> To cite package 'bndesr' in publications use:
 #> 
 #> 
 #> A BibTeX entry for LaTeX users is

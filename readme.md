@@ -8,8 +8,6 @@
 [![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/bndesr)](https://cran.r-project.org/package=bndesr)
 [![CRAN_Download_Badge](http://cranlogs.r-pkg.org/badges/bndesr)](https://CRAN.R-project.org/package=bndesr)
 [![CRAN_Download_Badge](http://cranlogs.r-pkg.org/badges/grand-total/bndesr)](https://CRAN.R-project.org/package=bndesr)
-[![“Buy Me A
-Coffee”](https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png)](https://www.buymeacoffee.com/igorlaltuf)
 <!-- badges: end -->
 
 ## Sobre o pacote
@@ -98,11 +96,13 @@ citation('bndesr')
 #> 
 #> To cite package 'bndesr' in publications use:
 #> 
+#>   Laltuf I (2023). "BNDESR: the package to access data from the
+#>   Brazilian Development Bank." <https://github.com/igorlaltuf/bndesr>.
 #> 
 #> A BibTeX entry for LaTeX users is
 #> 
 #>   @Misc{,
-#>     title = {BNDESR: the package to access data from the Brazilian Development Bank in R.},
+#>     title = {BNDESR: the package to access data from the Brazilian Development Bank.},
 #>     author = {Igor Laltuf},
 #>     year = {2023},
 #>     url = {https://github.com/igorlaltuf/bndesr},

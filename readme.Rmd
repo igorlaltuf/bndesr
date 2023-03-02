@@ -13,7 +13,7 @@ knitr::opts_chunk$set(
 )
 ```
 
-# bndesr: o pacote para acessar os dados do BNDES no R
+# bndesr
 
 <!-- badges: start -->
 [![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/bndesr)](https://cran.r-project.org/package=bndesr) [![CRAN_Download_Badge](http://cranlogs.r-pkg.org/badges/bndesr)](https://CRAN.R-project.org/package=bndesr) [![CRAN_Download_Badge](http://cranlogs.r-pkg.org/badges/grand-total/bndesr)](https://CRAN.R-project.org/package=bndesr)

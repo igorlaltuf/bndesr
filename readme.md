@@ -1,7 +1,7 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# bndesr: o pacote para acessar os dados do BNDES no R
+# bndesr
 
 <!-- badges: start -->
 

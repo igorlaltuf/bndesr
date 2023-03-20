@@ -22,21 +22,25 @@ query_bndespar_portifolio <- function(year = 'all') {
 
   link <- "https://www.bndes.gov.br/arquivos/central-downloads/operacoes_renda_variavel/carteira-renda-variavel.csv"
 
-  message('Please wait for the download to complete.')
+  if (RCurl::url.exists(link == F)) { # network is down = message (not an error anymore)
+    message("No internet connection or data source broken.")
+    return(NULL)
+  } else { # network is up = proceed to download
+    message("Please wait for the download to complete.")
 
-  suppressWarnings({
+    suppressWarnings({
 
-  df <- readr::read_csv2(link, show_col_types = FALSE, skip = 4) |>
-    janitor::clean_names() |>
-    dplyr::mutate(total_percent = round(readr::parse_number(total_percent, locale = readr::locale(decimal_mark = ",")), 1),
-                  on_percent = round(readr::parse_number(on_percent, locale = readr::locale(decimal_mark = ",")), 1),
-                  pn_percent = round(readr::parse_number(pn_percent, locale = readr::locale(decimal_mark = ",")), 1)) |>
-    dplyr::filter(ano %in% year)
+    df <- readr::read_csv2(link, show_col_types = FALSE, skip = 4) |>
+      janitor::clean_names() |>
+      dplyr::mutate(total_percent = round(readr::parse_number(total_percent, locale = readr::locale(decimal_mark = ",")), 1),
+                    on_percent = round(readr::parse_number(on_percent, locale = readr::locale(decimal_mark = ",")), 1),
+                    pn_percent = round(readr::parse_number(pn_percent, locale = readr::locale(decimal_mark = ",")), 1)) |>
+      dplyr::filter(ano %in% year)
 
-  })
+    })
 
-  message("Completed data query.")
+    message("Completed data query.")
 
-  return(df)
-
+    return(df)
+  }
 }

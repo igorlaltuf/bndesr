@@ -152,21 +152,40 @@ query_desimbursements <- function(year = 'all') {
       file_name <- "data_indeterminada"
     }
 
+
+
+
     # check if files have already been downloaded
     if(file.exists(paste0(dir.temp, "/", file_name, ".xlsx"))){
-      message("File already downloaded.")
+      message(paste0("File ", file_name,".xlsx already downloaded."))
 
     } else {
+      if (RCurl::url.exists(url_list[i] == F)) { # network is down = message (not an error anymore)
+        message("No internet connection or data source broken.")
+        return(NULL)
+      } else {
+
+        # nome dos anos de cada arquivo para mostrar no console
+        label_arquivos <- c('1995 to 2001', '2002 to 2008', '2009 and 2010')
+        label_arquivos_2 <- as.character(2011:2015)
+        label_arquivos_3<- c('2016 and 2017')
+        label_arquivos_4 <- as.character(2018:2022)
+        label_arquivos <- append(label_arquivos,label_arquivos_2)|>
+          append(label_arquivos_3)|>
+          append(label_arquivos_4)
+
+
+        message(paste0("Please wait. Downloading data from ", label_arquivos[i]))
 
         download.file(url_list[i],
                       destfile = paste0(dir.temp, "/", file_name, ".xlsx"),
                       mode = "wb") # download the file in binary mode)
-
-
+      }
   }
 }
 
   # import the files
+
 
   lista.arquivos.locais <- list.files(path = dir.temp, pattern = "desembolsos.*\\.xlsx$", full.names = F)
 

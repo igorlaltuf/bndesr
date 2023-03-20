@@ -1,6 +1,6 @@
 Package: bndesr
 Title: Access Data from the Brazilian Development Bank (BNDES)
-Version: 1.0
+Version: 1.0.1
 Authors@R: 
     person("Igor", "Laltuf", , "igorlaltuf@gmail.com", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0002-5614-4404"))
@@ -13,6 +13,7 @@ Imports:
     dplyr,
     janitor,
     lubridate,
+    RCurl,
     readr,
     readxl,
     stringr

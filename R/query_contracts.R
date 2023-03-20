@@ -110,52 +110,67 @@ query_contracts <- function(year = 'all') {
 
       # check if files have already been downloaded
       if(file.exists(paste0(dir.temp, "/financiamentos","_", file_name, ".xlsx"))){
-          message("File already downloaded.")
+        message(paste0("File ", file_name,".xlsx already downloaded."))
 
       } else {
-        try(
-      download.file(url_list[i],
-                    destfile = paste0(dir.temp, "/financiamentos","_", file_name, ".xlsx"),
-                    mode = "wb") # download the file in binary mode (needed for these xlsx files)
-        )
 
-        # If the last year files has been updated, it will try to guess the new date
+        if (RCurl::url.exists(url_list[i] == F)) { # network is down = message (not an error anymore)
+          message("No internet connection or data source broken.")
+          return(NULL)
 
-        if(file.size(paste0(dir.temp, "/financiamentos","_", file_name, ".xlsx")) < 100000){
+        } else {
 
-          message('The source site changed the file name. Trying to access the download link.')
+            message(paste0('Downloading file financiamentos_',file_name,'.xlsx'))
 
-          link_date <- "2022-11-30"
-          link_date <- lubridate::date(link_date)
-          date_today <- Sys.Date()
+            # depois document, load all, test e submit to cran
+            try(
+          download.file(url_list[i],
+                        destfile = paste0(dir.temp, "/financiamentos","_", file_name, ".xlsx"),
+                        mode = "wb") # download the file in binary mode (needed for these xlsx files)
+            )
 
-          dates_vector <- seq(as.Date(link_date), as.Date(date_today), by = "days")
+            # If the last year files has been updated, it will try to guess the new date
 
-              for (i in dates_vector) {
+            if(file.size(paste0(dir.temp, "/financiamentos","_", file_name, ".xlsx")) < 100000){
 
-              download.file(paste0("https://www.bndes.gov.br/arquivos/central-downloads/operacoes_financiamento/automaticas/operacoes_indiretas_automaticas_2017-01-01_ate_",
-                                   as.Date(i, origin = "1970-01-01"), ".xlsx"),
-                            destfile = paste0(dir.temp, "/financiamentos","_", file_name, ".xlsx"),
-                            mode = "wb") # download the file in binary mode)
+              message('The source site changed the file name. Trying to access the download link.')
 
-                i <- i + 1
+              link_date <- "2022-11-30"
+              link_date <- lubridate::date(link_date)
+              date_today <- Sys.Date()
 
-                if (file.size(paste0(dir.temp, "/financiamentos","_", file_name, ".xlsx")) > 100000){
-                  break
-                }
+              dates_vector <- seq(as.Date(link_date), as.Date(date_today), by = "days")
+
+                  for (i in dates_vector) {
+
+                  download.file(paste0("https://www.bndes.gov.br/arquivos/central-downloads/operacoes_financiamento/automaticas/operacoes_indiretas_automaticas_2017-01-01_ate_",
+                                       as.Date(i, origin = "1970-01-01"), ".xlsx"),
+                                destfile = paste0(dir.temp, "/financiamentos","_", file_name, ".xlsx"),
+                                mode = "wb") # download the file in binary mode)
+
+                    i <- i + 1
+
+                    if (file.size(paste0(dir.temp, "/financiamentos","_", file_name, ".xlsx")) > 100000){
+                      break
+                    }
+                  }
+
+                  if(file.size(paste0(dir.temp, "/financiamentos","_", file_name, ".xlsx")) < 100000) {
+                    message("Could not download file.")
+                  }
+
+
               }
 
-              if(file.size(paste0(dir.temp, "/financiamentos","_", file_name, ".xlsx")) < 100000) {
-                message("Could not download file.")
-              }
 
-
-          }
+        }
 
         }
     }
 
   # import the files
+  suppressWarnings({
+
   lista.arquivos.locais <- list.files(path = dir.temp, pattern = "^financiamentos.*\\.xlsx$", full.names = F)
 
   # Import only the files informed in the year argument
@@ -328,5 +343,5 @@ query_contracts <- function(year = 'all') {
   message("Completed data query.")
 
   return(table)
-
+  })
 }

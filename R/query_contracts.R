@@ -15,8 +15,7 @@
 #' @export
 query_contracts <- function(year = 'all') {
 
-  old <- options(scipen = 999, timeout = 240)
-  on.exit(options(old))
+  options(scipen = 999, timeout = 300)
 
   data_contrat <- ano <- valor_contratacao_reais <- juros <- subsetor_cnae_agrup <- valor_desembolso_reais <- situacao_operacional <- prazo_carencia_meses <- prazo_amortizacao_meses <-  NULL
 
@@ -32,43 +31,43 @@ query_contracts <- function(year = 'all') {
   for (i in year) {
 
   if(i %in% c(2017:2022)){
-    url <- "https://www.bndes.gov.br/arquivos/central-downloads/operacoes_financiamento/automaticas/operacoes_indiretas_automaticas_2017-01-01_ate_2022-11-30.xlsx"
-    url_list <- append(x = url_list, values = url)
+    link <- "https://www.bndes.gov.br/arquivos/central-downloads/operacoes_financiamento/automaticas/operacoes_indiretas_automaticas_2017-01-01_ate_2022-11-30.xlsx"
+    url_list <- append(x = url_list, values = link)
   }
 
   else if(i %in% c(2015:2016)){
-    url <- "https://www.bndes.gov.br/arquivos/central-downloads/operacoes_financiamento/automaticas/operacoes_indiretas_automaticas_2015-01-01_ate_2016-12-31.xlsx"
-    url_list <- append(x = url_list, values = url)
+    link <- "https://www.bndes.gov.br/arquivos/central-downloads/operacoes_financiamento/automaticas/operacoes_indiretas_automaticas_2015-01-01_ate_2016-12-31.xlsx"
+    url_list <- append(x = url_list, values = link)
     }
 
   else if(i == 2014){
-    url <- "https://www.bndes.gov.br/arquivos/central-downloads/operacoes_financiamento/automaticas/operacoes_indiretas_automaticas_2014-01-01_ate_2014-12-31.xlsx"
-    url_list <- append(x = url_list, values = url)
+    link <- "https://www.bndes.gov.br/arquivos/central-downloads/operacoes_financiamento/automaticas/operacoes_indiretas_automaticas_2014-01-01_ate_2014-12-31.xlsx"
+    url_list <- append(x = url_list, values = link)
     }
 
   else if(i == 2013){
-    url <- "https://www.bndes.gov.br/arquivos/central-downloads/operacoes_financiamento/automaticas/operacoes_indiretas_automaticas_2013-01-01_ate_2013-12-31.xlsx"
-    url_list <- append(x = url_list, values = url)
+    link <- "https://www.bndes.gov.br/arquivos/central-downloads/operacoes_financiamento/automaticas/operacoes_indiretas_automaticas_2013-01-01_ate_2013-12-31.xlsx"
+    url_list <- append(x = url_list, values = link)
     }
 
   else if(i == 2012){
-    url <- "https://www.bndes.gov.br/arquivos/central-downloads/operacoes_financiamento/automaticas/operacoes_indiretas_automaticas_2012-01-01_ate_2012-12-31.xlsx"
-    url_list <- append(x = url_list, values = url)
+    link <- "https://www.bndes.gov.br/arquivos/central-downloads/operacoes_financiamento/automaticas/operacoes_indiretas_automaticas_2012-01-01_ate_2012-12-31.xlsx"
+    url_list <- append(x = url_list, values = link)
     }
 
   else if(i == 2011){
-    url <- "https://www.bndes.gov.br/arquivos/central-downloads/operacoes_financiamento/automaticas/operacoes_indiretas_automaticas_2011-01-01_ate_2011-12-31.xlsx"
-    url_list <- append(x = url_list, values = url)
+    link <- "https://www.bndes.gov.br/arquivos/central-downloads/operacoes_financiamento/automaticas/operacoes_indiretas_automaticas_2011-01-01_ate_2011-12-31.xlsx"
+    url_list <- append(x = url_list, values = link)
     }
 
   else if(i %in% c(2009:2010)){
-    url <- "https://www.bndes.gov.br/arquivos/central-downloads/operacoes_financiamento/automaticas/operacoes_indiretas_automaticas_2009-01-01_ate_2010-12-31.xlsx"
-    url_list <- append(x = url_list, values = url)
+    link <- "https://www.bndes.gov.br/arquivos/central-downloads/operacoes_financiamento/automaticas/operacoes_indiretas_automaticas_2009-01-01_ate_2010-12-31.xlsx"
+    url_list <- append(x = url_list, values = link)
     }
 
   else if(i %in% c(2002:2008)){
-    url <- "https://www.bndes.gov.br/arquivos/central-downloads/operacoes_financiamento/automaticas/operacoes_indiretas_automaticas_2002-01-01_ate_2008-12-31.xlsx"
-    url_list <- append(x = url_list, values = url)
+    link <- "https://www.bndes.gov.br/arquivos/central-downloads/operacoes_financiamento/automaticas/operacoes_indiretas_automaticas_2002-01-01_ate_2008-12-31.xlsx"
+    url_list <- append(x = url_list, values = link)
     }
   }
 
@@ -341,6 +340,9 @@ query_contracts <- function(year = 'all') {
     dplyr::mutate(juros = round(as.numeric(juros), 2))
 
   message("Completed data query.")
+
+  old <- options(timeout = 60)
+  on.exit(options(old))
 
   return(table)
   })

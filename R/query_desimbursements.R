@@ -14,8 +14,7 @@
 #' @export
 query_desimbursements <- function(year = 'all') {
 
-  old <- options(scipen = 999, timeout = 240)
-  on.exit(options(old))
+  options(scipen = 999, timeout = 300)
 
   ano <-  NULL
 
@@ -30,73 +29,73 @@ query_desimbursements <- function(year = 'all') {
   for (i in year) {
 
     if(i %in% c(1995:2001)){
-      url <- "https://www.bndes.gov.br/wps/wcm/connect/site/e2865ce0-5425-442e-bc5b-9693f1b27353/BASE+DE+DADOS+DESEMBOLSO_1995+A+2001.xlsx?MOD=AJPERES&amp;CACHEID=ROOTWORKSPACE.Z18_7QGCHA41LORVA0AHO1SIO51085-e2865ce0-5425-442e-bc5b-9693f1b27353-ohz2o-v"
-      url_list <- append(x = url_list, values = url)
+      link <- "https://www.bndes.gov.br/wps/wcm/connect/site/e2865ce0-5425-442e-bc5b-9693f1b27353/BASE+DE+DADOS+DESEMBOLSO_1995+A+2001.xlsx?MOD=AJPERES&amp;CACHEID=ROOTWORKSPACE.Z18_7QGCHA41LORVA0AHO1SIO51085-e2865ce0-5425-442e-bc5b-9693f1b27353-ohz2o-v"
+      url_list <- append(x = url_list, values = link)
     }
 
     if(i %in% c(2002:2008)){
-      url <- "https://www.bndes.gov.br/wps/wcm/connect/site/b6a5cb41-e88d-42b5-86a7-35ebaeb42f95/BASE+DE+DADOS+DESEMBOLSO_2002+A+2008.xlsx?MOD=AJPERES&amp;CACHEID=ROOTWORKSPACE.Z18_7QGCHA41LORVA0AHO1SIO51085-b6a5cb41-e88d-42b5-86a7-35ebaeb42f95-ohz39Kp"
-      url_list <- append(x = url_list, values = url)
+      link <- "https://www.bndes.gov.br/wps/wcm/connect/site/b6a5cb41-e88d-42b5-86a7-35ebaeb42f95/BASE+DE+DADOS+DESEMBOLSO_2002+A+2008.xlsx?MOD=AJPERES&amp;CACHEID=ROOTWORKSPACE.Z18_7QGCHA41LORVA0AHO1SIO51085-b6a5cb41-e88d-42b5-86a7-35ebaeb42f95-ohz39Kp"
+      url_list <- append(x = url_list, values = link)
     }
 
     if(i %in% c(2009:2010)){
-      url <- "https://www.bndes.gov.br/wps/wcm/connect/site/e6c21560-6a43-46bd-b6c8-a34a7b25fc2c/BASE+DE+DADOS+DESEMBOLSO_2009+E+2010.xlsx?MOD=AJPERES&amp;CACHEID=ROOTWORKSPACE.Z18_7QGCHA41LORVA0AHO1SIO51085-e6c21560-6a43-46bd-b6c8-a34a7b25fc2c-ohz2S79"
-      url_list <- append(x = url_list, values = url)
+      link <- "https://www.bndes.gov.br/wps/wcm/connect/site/e6c21560-6a43-46bd-b6c8-a34a7b25fc2c/BASE+DE+DADOS+DESEMBOLSO_2009+E+2010.xlsx?MOD=AJPERES&amp;CACHEID=ROOTWORKSPACE.Z18_7QGCHA41LORVA0AHO1SIO51085-e6c21560-6a43-46bd-b6c8-a34a7b25fc2c-ohz2S79"
+      url_list <- append(x = url_list, values = link)
     }
 
     if(i %in% c(2011)){
-      url <- "https://www.bndes.gov.br/wps/wcm/connect/site/f349850c-5de1-43d1-8743-cb3c1b4bb07d/BASE+DE+DADOS+DESEMBOLSO_2011.xlsx?MOD=AJPERES&amp;CACHEID=ROOTWORKSPACE.Z18_7QGCHA41LORVA0AHO1SIO51085-f349850c-5de1-43d1-8743-cb3c1b4bb07d-ohz3g8T"
-      url_list <- append(x = url_list, values = url)
+      link <- "https://www.bndes.gov.br/wps/wcm/connect/site/f349850c-5de1-43d1-8743-cb3c1b4bb07d/BASE+DE+DADOS+DESEMBOLSO_2011.xlsx?MOD=AJPERES&amp;CACHEID=ROOTWORKSPACE.Z18_7QGCHA41LORVA0AHO1SIO51085-f349850c-5de1-43d1-8743-cb3c1b4bb07d-ohz3g8T"
+      url_list <- append(x = url_list, values = link)
     }
 
     if(i %in% c(2012)){
-      url <- "https://www.bndes.gov.br/wps/wcm/connect/site/9c1ab3d6-707a-4a9a-bd8e-c392ac2dce2e/BASE+DE+DADOS+DESEMBOLSO_2012.xlsx?MOD=AJPERES&amp;CACHEID=ROOTWORKSPACE.Z18_7QGCHA41LORVA0AHO1SIO51085-9c1ab3d6-707a-4a9a-bd8e-c392ac2dce2e-ohz2XhR"
-      url_list <- append(x = url_list, values = url)
+      link <- "https://www.bndes.gov.br/wps/wcm/connect/site/9c1ab3d6-707a-4a9a-bd8e-c392ac2dce2e/BASE+DE+DADOS+DESEMBOLSO_2012.xlsx?MOD=AJPERES&amp;CACHEID=ROOTWORKSPACE.Z18_7QGCHA41LORVA0AHO1SIO51085-9c1ab3d6-707a-4a9a-bd8e-c392ac2dce2e-ohz2XhR"
+      url_list <- append(x = url_list, values = link)
     }
 
     if(i %in% c(2013)){
-      url <- "https://www.bndes.gov.br/wps/wcm/connect/site/82e6909e-8ffd-4995-8d6b-8ea0007712dc/BASE+DE+DADOS+DESEMBOLSO_2013.xlsx?MOD=AJPERES&amp;CACHEID=ROOTWORKSPACE.Z18_7QGCHA41LORVA0AHO1SIO51085-82e6909e-8ffd-4995-8d6b-8ea0007712dc-ohz3kRn"
-      url_list <- append(x = url_list, values = url)
+      link <- "https://www.bndes.gov.br/wps/wcm/connect/site/82e6909e-8ffd-4995-8d6b-8ea0007712dc/BASE+DE+DADOS+DESEMBOLSO_2013.xlsx?MOD=AJPERES&amp;CACHEID=ROOTWORKSPACE.Z18_7QGCHA41LORVA0AHO1SIO51085-82e6909e-8ffd-4995-8d6b-8ea0007712dc-ohz3kRn"
+      url_list <- append(x = url_list, values = link)
     }
 
     if(i %in% c(2014)){
-      url <- "https://www.bndes.gov.br/wps/wcm/connect/site/b1b49da4-7038-4a5e-9381-27e53cba4f34/BASE+DE+DADOS+DESEMBOLSO_2014.xlsx?MOD=AJPERES&amp;CACHEID=ROOTWORKSPACE.Z18_7QGCHA41LORVA0AHO1SIO51085-b1b49da4-7038-4a5e-9381-27e53cba4f34-ohz2.Y7"
-      url_list <- append(x = url_list, values = url)
+      link <- "https://www.bndes.gov.br/wps/wcm/connect/site/b1b49da4-7038-4a5e-9381-27e53cba4f34/BASE+DE+DADOS+DESEMBOLSO_2014.xlsx?MOD=AJPERES&amp;CACHEID=ROOTWORKSPACE.Z18_7QGCHA41LORVA0AHO1SIO51085-b1b49da4-7038-4a5e-9381-27e53cba4f34-ohz2.Y7"
+      url_list <- append(x = url_list, values = link)
     }
 
     if(i %in% c(2015)){
-      url <- "https://www.bndes.gov.br/wps/wcm/connect/site/db85f49e-a0c1-4e96-bdfd-eb35a70ccad3/BASE+DE+DADOS+DESEMBOLSO_2015.xlsx?MOD=AJPERES&amp;CACHEID=ROOTWORKSPACE.Z18_7QGCHA41LORVA0AHO1SIO51085-db85f49e-a0c1-4e96-bdfd-eb35a70ccad3-ohz3qcg"
-      url_list <- append(x = url_list, values = url)
+      link <- "https://www.bndes.gov.br/wps/wcm/connect/site/db85f49e-a0c1-4e96-bdfd-eb35a70ccad3/BASE+DE+DADOS+DESEMBOLSO_2015.xlsx?MOD=AJPERES&amp;CACHEID=ROOTWORKSPACE.Z18_7QGCHA41LORVA0AHO1SIO51085-db85f49e-a0c1-4e96-bdfd-eb35a70ccad3-ohz3qcg"
+      url_list <- append(x = url_list, values = link)
     }
 
     if(i %in% c(2016:2017)){
-      url <- "https://www.bndes.gov.br/wps/wcm/connect/site/fe299328-61bc-489d-8f93-0b18e3925c73/BASE+DE+DADOS+DESEMBOLSO_2016+e+2017.xlsx?MOD=AJPERES&amp;CACHEID=ROOTWORKSPACE.Z18_7QGCHA41LORVA0AHO1SIO51085-fe299328-61bc-489d-8f93-0b18e3925c73-ohz34Qt"
-      url_list <- append(x = url_list, values = url)
+      link <- "https://www.bndes.gov.br/wps/wcm/connect/site/fe299328-61bc-489d-8f93-0b18e3925c73/BASE+DE+DADOS+DESEMBOLSO_2016+e+2017.xlsx?MOD=AJPERES&amp;CACHEID=ROOTWORKSPACE.Z18_7QGCHA41LORVA0AHO1SIO51085-fe299328-61bc-489d-8f93-0b18e3925c73-ohz34Qt"
+      url_list <- append(x = url_list, values = link)
     }
 
     if(i %in% c(2018)){
-      url <- "https://www.bndes.gov.br/wps/wcm/connect/site/2fa8a4c3-da0a-463e-9cba-dfb4a3ffe4d5/BASE+DE+DADOS+DESEMBOLSO_2018.xlsx?MOD=AJPERES&amp;CACHEID=ROOTWORKSPACE.Z18_7QGCHA41LORVA0AHO1SIO51085-2fa8a4c3-da0a-463e-9cba-dfb4a3ffe4d5-ohz3OHe"
-      url_list <- append(x = url_list, values = url)
+      link <- "https://www.bndes.gov.br/wps/wcm/connect/site/2fa8a4c3-da0a-463e-9cba-dfb4a3ffe4d5/BASE+DE+DADOS+DESEMBOLSO_2018.xlsx?MOD=AJPERES&amp;CACHEID=ROOTWORKSPACE.Z18_7QGCHA41LORVA0AHO1SIO51085-2fa8a4c3-da0a-463e-9cba-dfb4a3ffe4d5-ohz3OHe"
+      url_list <- append(x = url_list, values = link)
     }
 
     if(i %in% c(2019)){
-      url <- "https://www.bndes.gov.br/wps/wcm/connect/site/5b99509d-74e1-43f5-bd51-249ded7bec01/BASE+DE+DADOS+DESEMBOLSO_2019.xlsx?MOD=AJPERES&amp;CACHEID=ROOTWORKSPACE.Z18_7QGCHA41LORVA0AHO1SIO51085-5b99509d-74e1-43f5-bd51-249ded7bec01-ohz3ROg"
-      url_list <- append(x = url_list, values = url)
+      link <- "https://www.bndes.gov.br/wps/wcm/connect/site/5b99509d-74e1-43f5-bd51-249ded7bec01/BASE+DE+DADOS+DESEMBOLSO_2019.xlsx?MOD=AJPERES&amp;CACHEID=ROOTWORKSPACE.Z18_7QGCHA41LORVA0AHO1SIO51085-5b99509d-74e1-43f5-bd51-249ded7bec01-ohz3ROg"
+      url_list <- append(x = url_list, values = link)
     }
 
     if(i %in% c(2020)){
-      url <- "https://www.bndes.gov.br/wps/wcm/connect/site/0405b648-6dc4-4cbc-a2db-635dfc4fbaee/BASE+DE+DADOS+DESEMBOLSO_2020.xlsx?MOD=AJPERES&amp;CACHEID=ROOTWORKSPACE.Z18_7QGCHA41LORVA0AHO1SIO51085-0405b648-6dc4-4cbc-a2db-635dfc4fbaee-ohz3-fq"
-      url_list <- append(x = url_list, values = url)
+      link <- "https://www.bndes.gov.br/wps/wcm/connect/site/0405b648-6dc4-4cbc-a2db-635dfc4fbaee/BASE+DE+DADOS+DESEMBOLSO_2020.xlsx?MOD=AJPERES&amp;CACHEID=ROOTWORKSPACE.Z18_7QGCHA41LORVA0AHO1SIO51085-0405b648-6dc4-4cbc-a2db-635dfc4fbaee-ohz3-fq"
+      url_list <- append(x = url_list, values = link)
     }
 
     if(i %in% c(2021)){
-      url <- "https://www.bndes.gov.br/wps/wcm/connect/site/f4746208-ec83-46a7-8165-9cc702c11d17/BASE+DE+DADOS+DESEMBOLSO_2021.xlsx?MOD=AJPERES&amp;CACHEID=ROOTWORKSPACE.Z18_7QGCHA41LORVA0AHO1SIO51085-f4746208-ec83-46a7-8165-9cc702c11d17-ohz419F"
-      url_list <- append(x = url_list, values = url)
+      link <- "https://www.bndes.gov.br/wps/wcm/connect/site/f4746208-ec83-46a7-8165-9cc702c11d17/BASE+DE+DADOS+DESEMBOLSO_2021.xlsx?MOD=AJPERES&amp;CACHEID=ROOTWORKSPACE.Z18_7QGCHA41LORVA0AHO1SIO51085-f4746208-ec83-46a7-8165-9cc702c11d17-ohz419F"
+      url_list <- append(x = url_list, values = link)
     }
 
     if(i %in% c(2022)){
-      url <- "https://www.bndes.gov.br/wps/wcm/connect/site/46164445-1557-4991-b816-b9b90491df93/BASE+DE+DADOS+DESEMBOLSO_2022.xlsx?MOD=AJPERES&amp;CACHEID=ROOTWORKSPACE.Z18_7QGCHA41LORVA0AHO1SIO51085-46164445-1557-4991-b816-b9b90491df93-ohz44C-"
-      url_list <- append(x = url_list, values = url)
+      link <- "https://www.bndes.gov.br/wps/wcm/connect/site/46164445-1557-4991-b816-b9b90491df93/BASE+DE+DADOS+DESEMBOLSO_2022.xlsx?MOD=AJPERES&amp;CACHEID=ROOTWORKSPACE.Z18_7QGCHA41LORVA0AHO1SIO51085-46164445-1557-4991-b816-b9b90491df93-ohz44C-"
+      url_list <- append(x = url_list, values = link)
     }
   }
 
@@ -304,6 +303,9 @@ query_desimbursements <- function(year = 'all') {
     dplyr::filter(ano %in% year)
 
   message("Completed data query.")
+
+  old <- options(timeout = 60)
+  on.exit(options(old))
 
   return(table)
 

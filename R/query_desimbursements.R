@@ -14,7 +14,7 @@
 #' @export
 query_desimbursements <- function(year = 'all') {
 
-  options(scipen = 999, timeout = 300)
+  options(scipen = 999, timeout = 1500)
 
   ano <-  NULL
 

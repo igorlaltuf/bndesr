@@ -15,7 +15,7 @@
 #' @export
 query_contracts <- function(year = 'all') {
 
-  options(scipen = 999, timeout = 300)
+  options(scipen = 999, timeout = 1500)
 
   data_contrat <- ano <- valor_contratacao_reais <- juros <- subsetor_cnae_agrup <- valor_desembolso_reais <- situacao_operacional <- prazo_carencia_meses <- prazo_amortizacao_meses <-  NULL
 

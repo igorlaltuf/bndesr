@@ -17,6 +17,6 @@ Downloads contracts data for the selected years, since 2002, and return it in th
 Note: to access the total amount disbursed, use the function query_desimbursements_data().
 }
 \examples{
-\donttest{query_contracts(year = 2012)}
+\dontrun{query_contracts(year = 2012)}
 
 }

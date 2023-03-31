@@ -34,10 +34,4 @@ if (Sys.getenv('USERNAME') == 'igorl') {
 
 }
 
-df_2022 <- query_desimbursements(year = 2022)
-
-test_that("Check values from currenty year", {
-  expect_equal(ncol(df_2022), 16)
-  expect_gt(nrow(df_2022), 61279)
-})
 

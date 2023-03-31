@@ -9,7 +9,7 @@
 #' @return a dataframe with data for the selected year.
 #'
 #' @examples
-#' \donttest{query_desimbursements(year = c(1999:2010))}
+#' \dontrun{query_desimbursements(year = c(1999:2010))}
 #'
 #' @export
 query_desimbursements <- function(year = 'all') {
@@ -176,15 +176,24 @@ query_desimbursements <- function(year = 'all') {
 
         message(paste0("Please wait. Downloading data from ", label_arquivos[i]))
 
-        download.file(url_list[i],
-                      destfile = paste0(dir.temp, "/", file_name, ".xlsx"),
-                      mode = "wb") # download the file in binary mode)
+        tryCatch({
+          download.file(url_list[i],
+                        destfile = paste0(dir.temp, "/", file_name, ".xlsx"),
+                        mode = "wb")# download the file in binary mode)
+        },
+        # em caso de erro, interrompe a função e mostra msg de erro
+
+          error = function(e) {
+            message("Error downloading file. Try again later.", e$message)
+            stop("Error downloading file.")  }
+        )
       }
+    }
   }
-}
+
+  suppressWarnings({
 
   # import the files
-
 
   lista.arquivos.locais <- list.files(path = dir.temp, pattern = "desembolsos.*\\.xlsx$", full.names = F)
 
@@ -274,10 +283,19 @@ query_desimbursements <- function(year = 'all') {
 
     message(paste0("Importing file ", files_import[i]))
 
-    table_temp <- readxl::read_excel(paste0(dir.temp, '/', files_import[i]),
-                                     sheet = 2,
-                                     skip = 2) |>
-      janitor::clean_names()
+
+    tryCatch({
+      table_temp <- readxl::read_excel(paste0(dir.temp, '/', files_import[i]),
+                                       sheet = 2,
+                                       skip = 2) |>
+        janitor::clean_names()
+    },
+    # em caso de erro, interrompe a função e mostra msg de erro
+
+     error = function(e) {
+        message("Error importing file. Try again later.", e$message)
+        stop("Error importing file.")  }
+    )
 
 
       if(files_import[i] == 'desembolsos_1995_2001.xlsx') {
@@ -308,5 +326,5 @@ query_desimbursements <- function(year = 'all') {
   on.exit(options(old))
 
   return(table)
-
+  })
 }

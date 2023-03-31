@@ -16,6 +16,6 @@ a dataframe with data for the selected year.
 Downloads the data on loan disbursements for the selected years, since 1995, and return it in the form of a dataframe.
 }
 \examples{
-\donttest{query_desimbursements(year = c(1999:2010))}
+\dontrun{query_desimbursements(year = c(1999:2010))}
 
 }

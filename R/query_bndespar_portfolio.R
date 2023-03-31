@@ -30,12 +30,19 @@ query_bndespar_portifolio <- function(year = 'all') {
 
     suppressWarnings({
 
-    df <- readr::read_csv2(link, show_col_types = FALSE, skip = 4) |>
-      janitor::clean_names() |>
-      dplyr::mutate(total_percent = round(readr::parse_number(total_percent, locale = readr::locale(decimal_mark = ",")), 1),
-                    on_percent = round(readr::parse_number(on_percent, locale = readr::locale(decimal_mark = ",")), 1),
-                    pn_percent = round(readr::parse_number(pn_percent, locale = readr::locale(decimal_mark = ",")), 1)) |>
-      dplyr::filter(ano %in% year)
+    tryCatch({
+      df <- readr::read_csv2(link, show_col_types = FALSE, skip = 4) |>
+        janitor::clean_names() |>
+        dplyr::mutate(total_percent = round(readr::parse_number(total_percent, locale = readr::locale(decimal_mark = ",")), 1),
+                      on_percent = round(readr::parse_number(on_percent, locale = readr::locale(decimal_mark = ",")), 1),
+                      pn_percent = round(readr::parse_number(pn_percent, locale = readr::locale(decimal_mark = ",")), 1)) |>
+        dplyr::filter(ano %in% year)},
+      # em caso de erro, interrompe a função e mostra msg de erro
+
+      error = function(e) {
+        message("Error downloading file. Try again later.", e$message)
+        stop("Error downloading file.")  }
+    )
 
     })
 

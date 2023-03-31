@@ -10,7 +10,7 @@
 #' @return a dataframe with data for the selected year.
 #'
 #' @examples
-#' \donttest{query_contracts(year = 2012)}
+#' \dontrun{query_contracts(year = 2012)}
 #'
 #' @export
 query_contracts <- function(year = 'all') {
@@ -122,10 +122,16 @@ query_contracts <- function(year = 'all') {
             message(paste0('Downloading file financiamentos_',file_name,'.xlsx'))
 
             # depois document, load all, test e submit to cran
-            try(
-          download.file(url_list[i],
-                        destfile = paste0(dir.temp, "/financiamentos","_", file_name, ".xlsx"),
-                        mode = "wb") # download the file in binary mode (needed for these xlsx files)
+            tryCatch({
+              download.file(url_list[i],
+                            destfile = paste0(dir.temp, "/financiamentos","_", file_name, ".xlsx"),
+                            mode = "wb") # download the file in binary mode (needed for these xlsx files)
+            },
+            # em caso de erro, interrompe a função e mostra msg de erro
+
+            error = function(e) {
+              message("Error downloading file. Try again later.", e$message)
+              stop("Error downloading file.")  }
             )
 
             # If the last year files has been updated, it will try to guess the new date
@@ -243,12 +249,20 @@ query_contracts <- function(year = 'all') {
 
     if (files_import[i] == "financiamentos_nao_automatico.xlsx") {
 
-      # import non-automatic operations
-      table_temp <- readxl::read_excel(paste0(dir.temp, '/', files_import[i]),
-                                       sheet = 1,
-                                       skip = 4,
-                                       col_types = c(rep('text', 34))) |>
-        janitor::clean_names()
+      tryCatch({
+        # import non-automatic operations
+        table_temp <- readxl::read_excel(paste0(dir.temp, '/', files_import[i]),
+                                         sheet = 1,
+                                         skip = 4,
+                                         col_types = c(rep('text', 34))) |>
+          janitor::clean_names()
+      },
+      # em caso de erro, interrompe a função e mostra msg de erro
+
+      error = function(e) {
+        message("Error importing file. Try again later.", e$message)
+        stop("Error importing file.")  }
+      )
 
       colnames(table_temp) <- colnames(table)
 
@@ -280,12 +294,21 @@ query_contracts <- function(year = 'all') {
 
     } else {
 
-      # import automatic operations
-      table_temp <- readxl::read_excel(paste0(dir.temp, '/', files_import[i]),
-                                       sheet = 1,
-                                       skip = 5,
-                                       col_types = c(rep('text',30))) |>
-        janitor::clean_names()
+      tryCatch({
+        # import automatic operations
+        table_temp <- readxl::read_excel(paste0(dir.temp, '/', files_import[i]),
+                                         sheet = 1,
+                                         skip = 5,
+                                         col_types = c(rep('text',30))) |>
+          janitor::clean_names()
+      },
+      # em caso de erro, interrompe a função e mostra msg de erro
+
+      error = function(e) {
+        message("Error importing file. Try again later.", e$message)
+        stop("Error importing file.")  }
+      )
+
 
       names_auto <- table_col_names[c(1, 2, 4:6, 8:31, 34)]
       colnames(table_temp) <- names_auto

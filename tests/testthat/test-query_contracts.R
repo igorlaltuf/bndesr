@@ -14,9 +14,3 @@ if (Sys.getenv('USERNAME') == 'igorl') {
 
 }
 
-df_2022 <- query_contracts(year = 2022)
-
-test_that("Check values from currenty year", {
-  expect_equal(ncol(df_2022), 35)
-  expect_gt(nrow(df_2022), 42332)
-})

@@ -12,7 +12,7 @@
 #' df <- query_bndespar_portifolio()
 #'
 #' @export
-query_bndespar_portifolio <- function(year = 'all') {
+query_bndespar_portfolio <- function(year = 'all') {
 
   if ("all" %in% year) {
     year <- c(2006:2022)

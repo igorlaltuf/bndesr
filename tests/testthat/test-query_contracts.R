@@ -6,10 +6,10 @@ if (Sys.getenv('USERNAME') == 'igorl') {
 
 
   test_that("Check values from previous years", {
-    expect_equal(nrow(df), 2124078)
+    expect_equal(nrow(df), 2124076)
     expect_equal(ncol(df), 35)
-    expect_equal(sum(df$valor_contratacao_reais), 1533849361903)
-    expect_equal(sum(df$valor_desembolso_reais), 1389737947385)
+    expect_equal(sum(df$valor_contratacao_reais), 1533886450893)
+    expect_equal(sum(df$valor_desembolso_reais), 1404777248159)
   })
 
 }

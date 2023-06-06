@@ -1,5 +1,5 @@
 
-df <- query_bndespar_portifolio()
+df <- query_bndespar_portfolio()
 
 test_that("Check row number", {
   expect_equal(ncol(df), 13)

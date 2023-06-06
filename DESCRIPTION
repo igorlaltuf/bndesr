@@ -1,6 +1,6 @@
 Package: bndesr
 Title: Access Data from the Brazilian Development Bank (BNDES)
-Version: 1.0.2
+Version: 1.0.3
 Authors@R: 
     person("Igor", "Laltuf", , "igorlaltuf@gmail.com", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0002-5614-4404"))
@@ -8,7 +8,7 @@ Description: Allows access to data on BNDES disbursements and contracts since 19
 License: MIT + file LICENSE
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.2.1
+RoxygenNote: 7.2.3
 Imports: 
     curl,
     dplyr,

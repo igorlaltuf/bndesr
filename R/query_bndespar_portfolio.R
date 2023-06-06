@@ -9,7 +9,7 @@
 #' @return a dataframe with the data
 #'
 #' @examples
-#' df <- query_bndespar_portifolio()
+#' df <- query_bndespar_portfolio()
 #'
 #' @export
 query_bndespar_portfolio <- function(year = 'all') {

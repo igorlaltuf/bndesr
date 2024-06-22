@@ -19,7 +19,7 @@ query_desimbursements <- function(year = 'all') {
   ano <-  NULL
 
   if ("all" %in% year) {
-    year <- c(1995:2022)
+    year <- c(1995:(as.numeric(format(Sys.Date(), "%Y"))))
   }
 
   dir.temp <- tempdir()

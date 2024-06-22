@@ -15,7 +15,7 @@
 query_bndespar_portfolio <- function(year = 'all') {
 
   if ("all" %in% year) {
-    year <- c(2006:2022)
+    year <- c(2006:(as.numeric(format(Sys.Date(), "%Y"))))
   }
 
   ano <- total_percent <- on_percent <- pn_percent <- NULL
@@ -36,7 +36,10 @@ query_bndespar_portfolio <- function(year = 'all') {
         dplyr::mutate(total_percent = round(readr::parse_number(total_percent, locale = readr::locale(decimal_mark = ",")), 1),
                       on_percent = round(readr::parse_number(on_percent, locale = readr::locale(decimal_mark = ",")), 1),
                       pn_percent = round(readr::parse_number(pn_percent, locale = readr::locale(decimal_mark = ",")), 1)) |>
-        dplyr::filter(ano %in% year)},
+        dplyr::filter(ano %in% year) |>
+        dplyr::arrange(dplyr::desc(ano))
+
+      },
       # em caso de erro, interrompe a função e mostra msg de erro
 
       error = function(e) {

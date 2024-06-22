@@ -20,7 +20,7 @@ query_contracts <- function(year = 'all') {
   data_contrat <- ano <- valor_contratacao_reais <- juros <- subsetor_cnae_agrup <- valor_desembolso_reais <- situacao_operacional <- prazo_carencia_meses <- prazo_amortizacao_meses <-  NULL
 
   if ("all" %in% year) {
-    year <- c(2002:2022)
+    year <- c(2002:(as.numeric(format(Sys.Date(), "%Y"))))
   }
 
   dir.temp <- tempdir()

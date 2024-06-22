@@ -15,7 +15,7 @@
 query_bndespar_desimbursements <- function(year = 'all') {
 
   if ("all" %in% year) {
-    year <- c(2006:2022)
+    year <- c(2006:(as.numeric(format(Sys.Date(), "%Y"))))
   }
 
   ano <- NULL
@@ -32,10 +32,20 @@ query_bndespar_desimbursements <- function(year = 'all') {
       suppressWarnings({
 
       tryCatch({
-        df <- readr::read_csv2(link, locale = readr::locale(encoding = "latin1"), show_col_types = FALSE,
+        df <- readr::read_csv2(link, locale = readr::locale(encoding = "latin1"),
+                               show_col_types = FALSE,
                                skip = 4) |>
           janitor::clean_names() |>
-          dplyr::filter(ano %in% year)},
+          dplyr::filter(ano %in% year)
+
+        colnames(df) <- c("ano", "razao_social", "sigla", "cnpj", "aberta_fechada",
+                          "tipo_de_ativo", "valor_desembolsado", "objetivo_predominante",
+                          "descricao_resumida_da_operacao", "setor")
+
+
+        df$valor_desembolsado <- as.numeric(gsub("\\.", "", gsub(",", ".", df$valor_desembolsado))) / 100
+
+        },
       # em caso de erro, interrompe a função e mostra msg de erro
 
       error = function(e) {
@@ -47,5 +57,6 @@ query_bndespar_desimbursements <- function(year = 'all') {
       message("Completed data query.")
 
       return(df)
-    } # /if - network up or down
+    }
 }
+

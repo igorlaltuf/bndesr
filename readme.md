@@ -5,9 +5,9 @@
 
 <!-- badges: start -->
 
-[![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/bndesr)](https://cran.r-project.org/package=bndesr)
-[![CRAN_Download_Badge](http://cranlogs.r-pkg.org/badges/grand-total/bndesr)](https://CRAN.R-project.org/package=bndesr)
-[![CRAN_Download_Badge](http://cranlogs.r-pkg.org/badges/bndesr)](https://CRAN.R-project.org/package=bndesr)
+[![CRAN_Status_Badge](https://www.r-pkg.org/badges/version/bndesr)](https://cran.r-project.org/package=bndesr)
+[![CRAN_Download_Badge](https://cranlogs.r-pkg.org/badges/grand-total/bndesr)](https://CRAN.R-project.org/package=bndesr)
+[![CRAN_Download_Badge](https://cranlogs.r-pkg.org/badges/bndesr)](https://CRAN.R-project.org/package=bndesr)
 <!-- badges: end -->
 
 ## Sobre o pacote
@@ -107,7 +107,3 @@ citation('bndesr')
 #>     url = {https://github.com/igorlaltuf/bndesr},
 #>   }
 ```
-
-## Dicionário de dados
-
-Em breve.

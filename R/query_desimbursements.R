@@ -18,8 +18,10 @@ query_desimbursements <- function(year = 'all') {
 
   ano <-  NULL
 
+  ano_atual <- as.numeric(format(Sys.Date(), "%Y"))
+
   if ("all" %in% year) {
-    year <- c(1995:(as.numeric(format(Sys.Date(), "%Y"))))
+    year <- c(1995:ano_atual)
   }
 
   dir.temp <- tempdir()
@@ -97,6 +99,21 @@ query_desimbursements <- function(year = 'all') {
       link <- "https://www.bndes.gov.br/wps/wcm/connect/site/46164445-1557-4991-b816-b9b90491df93/BASE+DE+DADOS+DESEMBOLSO_2022.xlsx?MOD=AJPERES&amp;CACHEID=ROOTWORKSPACE.Z18_7QGCHA41LORVA0AHO1SIO51085-46164445-1557-4991-b816-b9b90491df93-ohz44C-"
       url_list <- append(x = url_list, values = link)
     }
+
+    if(i %in% c(2023)){
+      link <- "https://www.bndes.gov.br/wps/wcm/connect/site/a0a77a68-eef1-4d2d-83ac-cc122b47003f/BASE+DE+DADOS+DESEMBOLSO_2023.xlsx?MOD=AJPERES&amp;CACHEID=ROOTWORKSPACE.Z18_7QGCHA41LORVA0AHO1SIO51085-a0a77a68-eef1-4d2d-83ac-cc122b47003f-pcsJrcC"
+      url_list <- append(x = url_list, values = link)
+    }
+
+    if(i %in% c(2024)){
+      link <- "https://www.bndes.gov.br/wps/wcm/connect/site/86a46fa7-0f57-4430-8cec-0148b01c19d8/BASE+DE+DADOS+DESEMBOLSO_2024.xlsx?MOD=AJPERES&amp;CACHEID=ROOTWORKSPACE.Z18_7QGCHA41LORVA0AHO1SIO51085-86a46fa7-0f57-4430-8cec-0148b01c19d8-pcsJtTt"
+      url_list <- append(x = url_list, values = link)
+    }
+
+
+
+
+
   }
 
   # create a vector with the links
@@ -146,7 +163,14 @@ query_desimbursements <- function(year = 'all') {
     } else if(url_list[i] == "https://www.bndes.gov.br/wps/wcm/connect/site/46164445-1557-4991-b816-b9b90491df93/BASE+DE+DADOS+DESEMBOLSO_2022.xlsx?MOD=AJPERES&amp;CACHEID=ROOTWORKSPACE.Z18_7QGCHA41LORVA0AHO1SIO51085-46164445-1557-4991-b816-b9b90491df93-ohz44C-") {
       file_name <- "desembolsos_2022"
 
+    } else if(url_list[i] == "https://www.bndes.gov.br/wps/wcm/connect/site/a0a77a68-eef1-4d2d-83ac-cc122b47003f/BASE+DE+DADOS+DESEMBOLSO_2023.xlsx?MOD=AJPERES&amp;CACHEID=ROOTWORKSPACE.Z18_7QGCHA41LORVA0AHO1SIO51085-a0a77a68-eef1-4d2d-83ac-cc122b47003f-pcsJrcC") {
+      file_name <- "desembolsos_2023"
+
+    } else if(url_list[i] == "https://www.bndes.gov.br/wps/wcm/connect/site/86a46fa7-0f57-4430-8cec-0148b01c19d8/BASE+DE+DADOS+DESEMBOLSO_2024.xlsx?MOD=AJPERES&amp;CACHEID=ROOTWORKSPACE.Z18_7QGCHA41LORVA0AHO1SIO51085-86a46fa7-0f57-4430-8cec-0148b01c19d8-pcsJtTt") {
+      file_name <- "desembolsos_2024"
+
     }
+
     else {
       file_name <- "data_indeterminada"
     }
@@ -168,7 +192,7 @@ query_desimbursements <- function(year = 'all') {
         label_arquivos <- c('1995 to 2001', '2002 to 2008', '2009 and 2010')
         label_arquivos_2 <- as.character(2011:2015)
         label_arquivos_3<- c('2016 and 2017')
-        label_arquivos_4 <- as.character(2018:2022)
+        label_arquivos_4 <- as.character(2018:2024)
         label_arquivos <- append(label_arquivos,label_arquivos_2)|>
           append(label_arquivos_3)|>
           append(label_arquivos_4)
@@ -257,6 +281,14 @@ query_desimbursements <- function(year = 'all') {
 
     if(i %in% c(2022)){
       files_import <- append(x = files_import, values = "desembolsos_2022.xlsx")
+    }
+
+    if(i %in% c(2023)){
+      files_import <- append(x = files_import, values = "desembolsos_2023.xlsx")
+    }
+
+    if(i %in% c(2024)){
+      files_import <- append(x = files_import, values = "desembolsos_2024.xlsx")
     }
 
   }

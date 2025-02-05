@@ -19,8 +19,12 @@ query_contracts <- function(year = 'all') {
 
   data_contrat <- ano <- valor_contratacao_reais <- juros <- subsetor_cnae_agrup <- valor_desembolso_reais <- situacao_operacional <- prazo_carencia_meses <- prazo_amortizacao_meses <-  NULL
 
+  ano_atual <- as.numeric(format(Sys.Date(), "%Y"))
+
   if ("all" %in% year) {
-    year <- c(2002:(as.numeric(format(Sys.Date(), "%Y"))))
+
+    year <- c(2002:ano_atual)
+
   }
 
   dir.temp <- tempdir()
@@ -30,8 +34,10 @@ query_contracts <- function(year = 'all') {
 
   for (i in year) {
 
-  if(i %in% c(2017:2022)){
-    link <- "https://www.bndes.gov.br/arquivos/central-downloads/operacoes_financiamento/automaticas/operacoes_indiretas_automaticas_2017-01-01_ate_2022-11-30.xlsx"
+    #indiretas
+
+  if(i %in% c(2017:2024)){
+    link <- "https://www.bndes.gov.br/arquivos/central-downloads/operacoes_financiamento/automaticas/operacoes_indiretas_automaticas_2017-01-01_ate_2024-11-30.xlsx"
     url_list <- append(x = url_list, values = link)
   }
 
@@ -76,12 +82,11 @@ query_contracts <- function(year = 'all') {
 
   for(i in seq_along(url_list)) {
 
-
      if(url_list[i] == "https://www.bndes.gov.br/arquivos/central-downloads/operacoes_financiamento/naoautomaticas/naoautomaticas.xlsx"){
        file_name <- "nao_automatico"
 
-     } else if(url_list[i] == "https://www.bndes.gov.br/arquivos/central-downloads/operacoes_financiamento/automaticas/operacoes_indiretas_automaticas_2017-01-01_ate_2022-11-30.xlsx") {
-       file_name <- "2017-2022"
+     } else if(url_list[i] == "https://www.bndes.gov.br/arquivos/central-downloads/operacoes_financiamento/automaticas/operacoes_indiretas_automaticas_2017-01-01_ate_2024-11-30.xlsx") {
+       file_name <- "2017-2024"
 
      } else if(url_list[i] == "https://www.bndes.gov.br/arquivos/central-downloads/operacoes_financiamento/automaticas/operacoes_indiretas_automaticas_2015-01-01_ate_2016-12-31.xlsx") {
        file_name <- "2015-2016"
@@ -140,7 +145,7 @@ query_contracts <- function(year = 'all') {
 
               message('The source site changed the file name. Trying to access the download link.')
 
-              link_date <- "2022-11-30"
+              link_date <- "2024-11-30"
               link_date <- lubridate::date(link_date)
               date_today <- Sys.Date()
 
@@ -212,8 +217,8 @@ query_contracts <- function(year = 'all') {
     files_import <- append(x = files_import, values = "financiamentos_2015-2016.xlsx")
   }
 
-  if(i %in% c(2017:2022)){
-    files_import <- append(x = files_import, values = "financiamentos_2017-2022.xlsx")
+  if(i %in% c(2017:2024)){
+    files_import <- append(x = files_import, values = "financiamentos_2017-2024.xlsx")
   }
 
   }
@@ -253,7 +258,7 @@ query_contracts <- function(year = 'all') {
         # import non-automatic operations
         table_temp <- readxl::read_excel(paste0(dir.temp, '/', files_import[i]),
                                          sheet = 1,
-                                         skip = 4,
+                                         skip = 4, # tem que ser 5
                                          col_types = c(rep('text', 34))) |>
           janitor::clean_names()
       },

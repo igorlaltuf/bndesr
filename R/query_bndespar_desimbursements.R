@@ -14,15 +14,11 @@
 #' @export
 query_bndespar_desimbursements <- function(year = 'all') {
 
-  if ("all" %in% year) {
-    year <- c(2006:(as.numeric(format(Sys.Date(), "%Y"))))
-  }
-
   ano <- NULL
 
   link <- "https://www.bndes.gov.br/arquivos/central-downloads/operacoes_renda_variavel/desembolsos-renda-variavel.csv"
 
-  # Download data
+    # Download data
     if (RCurl::url.exists(link == F)) { # network is down = message (not an error anymore)
       message("No internet connection or data source broken.")
       return(NULL)
@@ -35,15 +31,7 @@ query_bndespar_desimbursements <- function(year = 'all') {
         df <- readr::read_csv2(link, locale = readr::locale(encoding = "latin1"),
                                show_col_types = FALSE,
                                skip = 4) |>
-          janitor::clean_names() |>
-          dplyr::filter(ano %in% year)
-
-        colnames(df) <- c("ano", "razao_social", "sigla", "cnpj", "aberta_fechada",
-                          "tipo_de_ativo", "valor_desembolsado", "objetivo_predominante",
-                          "descricao_resumida_da_operacao", "setor")
-
-
-        df$valor_desembolsado <- as.numeric(gsub("\\.", "", gsub(",", ".", df$valor_desembolsado))) / 100
+          janitor::clean_names()
 
         },
       # em caso de erro, interrompe a função e mostra msg de erro
@@ -54,9 +42,23 @@ query_bndespar_desimbursements <- function(year = 'all') {
       )
       })
 
+      # Treatment
+      colnames(df) <- c("ano", "razao_social", "sigla", "cnpj", "aberta_fechada",
+                        "tipo_de_ativo", "valor_desembolsado", "objetivo_predominante",
+                        "descricao_resumida_da_operacao", "setor")
+
+      if ("all" %in% year) {
+        ano_atual <- as.numeric(format(Sys.Date(), "%Y"))
+        year <- c(2002:ano_atual)
+      }
+
+      df <- df |>
+        dplyr::filter(ano %in% year)
+
+      df$valor_desembolsado <- as.numeric(gsub("\\.", "", gsub(",", ".", df$valor_desembolsado))) / 100
+
       message("Completed data query.")
 
       return(df)
     }
 }
-

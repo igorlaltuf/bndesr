@@ -14,10 +14,6 @@
 #' @export
 query_bndespar_portfolio <- function(year = 'all') {
 
-  if ("all" %in% year) {
-    year <- c(2006:(as.numeric(format(Sys.Date(), "%Y"))))
-  }
-
   ano <- total_percent <- on_percent <- pn_percent <- NULL
 
   link <- "https://www.bndes.gov.br/arquivos/central-downloads/operacoes_renda_variavel/carteira-renda-variavel.csv"
@@ -32,12 +28,7 @@ query_bndespar_portfolio <- function(year = 'all') {
 
     tryCatch({
       df <- readr::read_csv2(link, show_col_types = FALSE, skip = 4) |>
-        janitor::clean_names() |>
-        dplyr::mutate(total_percent = round(readr::parse_number(total_percent, locale = readr::locale(decimal_mark = ",")), 1),
-                      on_percent = round(readr::parse_number(on_percent, locale = readr::locale(decimal_mark = ",")), 1),
-                      pn_percent = round(readr::parse_number(pn_percent, locale = readr::locale(decimal_mark = ",")), 1)) |>
-        dplyr::filter(ano %in% year) |>
-        dplyr::arrange(dplyr::desc(ano))
+        janitor::clean_names()
 
       },
       # em caso de erro, interrompe a função e mostra msg de erro
@@ -48,6 +39,20 @@ query_bndespar_portfolio <- function(year = 'all') {
     )
 
     })
+
+
+    if ("all" %in% year) {
+      ano_atual <- as.numeric(format(Sys.Date(), "%Y"))
+      year <- c(2002:ano_atual)
+    }
+
+    # treatment
+    df <- df |>
+      dplyr::mutate(total_percent = round(readr::parse_number(total_percent, locale = readr::locale(decimal_mark = ",")), 1),
+                    on_percent = round(readr::parse_number(on_percent, locale = readr::locale(decimal_mark = ",")), 1),
+                    pn_percent = round(readr::parse_number(pn_percent, locale = readr::locale(decimal_mark = ",")), 1)) |>
+      dplyr::filter(ano %in% year) |>
+      dplyr::arrange(dplyr::desc(ano))
 
     message("Completed data query.")
 
